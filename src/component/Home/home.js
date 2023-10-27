@@ -4,41 +4,50 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
-            newsData: [],
+            newsData: [
+                {
+                    id: 1,
+                    title: "Technology",
+                    content: "This is the content of the first article in Technology.",
+                    image: "https://cryptocrunchapp.com/wp-content/uploads/2023/10/cryptocrunch-trends-36-768x960.jpg",
+                    views: 123
+                },
+                {
+                    id: 2,
+                    title: "Assets - Crypto",
+                    content: "This is the content of the second article in Crypto.",
+                    image: "https://cryptocrunchapp.com/wp-content/uploads/2023/10/cryptocrunch-trends-37-768x960.jpg",
+                    views: 234
+                },
+                {
+                    id: 3,
+                    title: "Global Market - Entertainment",
+                    content: "This is the content of the third article in Entertainment.",
+                    image: "https://cryptocrunchapp.com/wp-content/uploads/2023/10/photo1698156993-768x960.jpeg",
+                    views: 345
+                }
+            ],
             activeTab: 'Technology',
             cryptoStats: 'Sample Cryptocrunchstats',
-            cryptoDescription: 'This is a sample description of the top 10 trending crypto coins of the day.',
+            cryptoDescription: 'This is a sample description of the top 10 trending crypto coins of the day',
         };
     }
 
-
-    componentDidMount() {
-        // Simulate fetching data from the sample API
-        const sampleData = [
-            {
-                "id": 1,
-                "title": "Sample Article 1 - Technology",
-                "content": "This is the content of the first article in Technology.",
-                "image": "https://via.placeholder.com/400x200",
-                "views": 123
-            },
-            {
-                "id": 2,
-                "title": "Sample Article 2 - Crypto",
-                "content": "This is the content of the second article in Crypto.",
-                "image": "https://via.placeholder.com/400x200",
-                "views": 234
-            },
-            {
-                "id": 3,
-                "title": "Sample Article 3 - Entertainment",
-                "content": "This is the content of the third article in Entertainment.",
-                "image": "https://via.placeholder.com/400x200",
-                "views": 345
-            }
-        ];
-
-        this.setState({ newsData: sampleData });
+    handleTabClick = (tab) => {
+        this.setState({ activeTab: tab });
+    }
+    handleShare = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Shared from My React App',
+                text: 'Check out this article!',
+                url: window.location.href,
+            })
+                .then(() => console.log('Shared successfully'))
+                .catch((error) => console.error('Sharing failed', error));
+        } else {
+            alert('Sharing is not supported in this browser. You can manually copy the URL.');
+        }
     }
 
     render() {
@@ -50,23 +59,23 @@ class Home extends Component {
                     <div className="container">
                         <div className="main-app">
                             <div className="logo-header">
-                                <img src={require('../../assets/img/logo.jpg')} alt="Logo" />
+                                <img src={require('../../assets/img/cryptocurrency.png')} alt="Logo" />
                             </div>
                             <header>
                                 <nav>
                                     <ul>
                                         <li>
-                                            <a href="#" onClick={() => this.setState({ activeTab: 'Technology' })}>
+                                            <a href="#" onClick={() => this.handleTabClick('Technology')}>
                                                 Technology
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" onClick={() => this.setState({ activeTab: 'Crypto' })}>
+                                            <a href="#" onClick={() => this.handleTabClick('Crypto')}>
                                                 Crypto
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" onClick={() => this.setState({ activeTab: 'Entertainment' })}>
+                                            <a href="#" onClick={() => this.handleTabClick('Entertainment')}>
                                                 Entertainment
                                             </a>
                                         </li>
@@ -74,22 +83,22 @@ class Home extends Component {
                                 </nav>
                             </header>
                             <div className='main-cont'>
-                                <div className='main-cont-dv'>
-                                    <h2>{this.state.cryptoStats} <img src={require('../../assets/img/Verified.png')} alt="Logo" /></h2>
-                                    <p>{this.state.cryptoDescription}</p>
-                                </div>
                                 {newsData.map((article) => (
                                     article.title.includes(activeTab) && (
                                         <div key={article.id}>
-                                            <h2>{article.title}</h2>
-                                            <p>{article.content}</p>
+                                            <div className='main-cont-dv'>
+                                                <h2>{article.title} <img src={require('../../assets/img/Verified.png')} alt="Verified" /></h2>
+                                                <p>{article.content}</p>
+                                            </div>
                                             <section className="image-section">
                                                 <img src={article.image} alt="News Article" />
                                             </section>
                                             <div className="social-icons">
-                                                <a href="#"><img src={require('../../assets/img/x-logo-1.png')} alt="Logo" /></a>
-                                                <a href="#"><img src={require('../../assets/img/copy-logo.png')} alt="Logo" /></a>
-                                                <a href="#"><img src={require('../../assets/img/send-logo.png')} alt="Logo" /></a>
+                                                <a onClick={this.handleShare}>
+                                                    <img src={require('../../assets/img/send-logo.png')} alt="Share" />
+                                                </a>
+                                                <a><img src={require('../../assets/img/x-logo-1.png')} alt="X Logo" /></a>
+                                                <a><img src={require('../../assets/img/copy-logo.png')} alt="Copy Logo" /></a>
                                             </div>
                                             <div className='views'>
                                                 <p>{article.views} Views</p>

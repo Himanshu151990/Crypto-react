@@ -558,7 +558,7 @@ visibility: visible;
 header {
   background-color: #333;
   color: #fff;
-  padding: 10px 0;
+  padding: 5px 0;
 }
 
 h1 {
@@ -571,10 +571,12 @@ nav ul {
   padding: 0;
   display: flex;
   justify-content: center;
+  margin: 0px;
 }
 
 nav li {
   margin: 0 20px;
+  width: 30%;
 }
 
 nav a {
@@ -639,4 +641,28 @@ section.image-section img{
 .main-cont-dv h2 img {
   height: 15px;
   width: 15px;
+}
+
+
+header nav a,header nav a:hover{
+  text-decoration: none;
+}
+
+header nav li{
+  margin: 0px;
+  
+  width:33%;
+}
+
+header nav li.active a{
+  background: gray;
+}
+header nav ul li a {
+  padding: 10px 15px;
+  width: 100%;
+  display: block;
+}
+header nav ul li a:hover{
+  color: #fff;
+  background-color: gray;
 }
