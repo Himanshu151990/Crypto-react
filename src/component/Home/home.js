@@ -10,6 +10,7 @@ class Home extends Component {
             cryptoDescription: 'This is a sample description of the top 10 trending crypto coins of the day.',
         };
     }
+    
 
     componentDidMount() {
         // Simulate fetching data from the sample API
